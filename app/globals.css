@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,13 +14,102 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: linear-gradient(135deg, #1e3a8a, #7e22ce);
+    --foreground: #ffffff;
   }
 }
 
 body {
   background: var(--background);
+  background-attachment: fixed;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+  /* Hide status bar on mobile */
+  -webkit-appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Prevent horizontal scroll on all elements */
+* {
+  box-sizing: border-box;
+}
+
+/* Hide all potential top bars and status elements */
+header[role="banner"],
+.status-bar,
+.top-bar,
+.browser-bar,
+.address-bar,
+.toolbar,
+.navigation-bar {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Mobile specific fixes - gentle approach */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden !important;
+    touch-action: pan-y;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+  
+  html {
+    overflow-x: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+  }
+  
+  /* Only prevent horizontal scroll, keep layout intact */
+  main, section {
+    overflow-x: hidden;
+  }
+  
+  /* Hide status bar and top elements - stronger approach */
+  body::before,
+  body::after,
+  html::before,
+  html::after {
+    display: none !important;
+    content: none !important;
+  }
+  
+  /* Remove any top spacing that might create status bar effect */
+  * {
+    margin-top: 0 !important;
+  }
+  
+  /* Hide any potential status bar elements */
+  [role="status"],
+  [aria-label*="status"],
+  .status-bar,
+  .top-bar {
+    display: none !important;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
