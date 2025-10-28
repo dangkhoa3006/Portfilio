@@ -115,3 +115,9 @@ header[role="banner"],
     transform: translateX(-50%);
   }
 }
+
+/* Hint the browser to skip offscreen rendering for below-the-fold sections */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
+}

@@ -1,8 +1,10 @@
 import RevealOnScroll from '@/components/RevealOnScroll';
 import Header from '@/components/Header';
+import TypingAnimationLazy from '@/components/TypingAnimationLazy';
 import TypingAnimation from '@/components/TypingAnimation';
 import TechStack from '@/components/TechStack';
 import Footer from '@/components/Footer';
+import Badge3DLazy from '@/components/Badge3DLazy';
 import Badge3DWrapper from '@/components/Badge3DWrapper';
 import SocialLinksLazy from '@/components/SocialLinksLazy';
 import {
@@ -21,8 +23,10 @@ import {
   SiDocker
 } from 'react-icons/si';
 
+import { useMemo } from 'react';
+
 export default function Home() {
-  const techLogos = [
+  const techLogos = useMemo(() => ([
     { node: <SiJavascript />, title: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
     { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
     { node: <SiReact />, title: "React", href: "https://react.dev" },
@@ -36,7 +40,7 @@ export default function Home() {
     { node: <SiMongodb />, title: "MongoDB", href: "https://www.mongodb.com" },
     { node: <SiPostgresql />, title: "PostgreSQL", href: "https://www.postgresql.org" },
     { node: <SiDocker />, title: "Docker", href: "https://www.docker.com" },
-  ];
+  ]), []);
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
@@ -45,7 +49,7 @@ export default function Home() {
         {/* Portfolio content sẽ được thêm vào đây */}
         <section id="home" className="min-h-screen flex items-center justify-center relative px-4 overflow-x-hidden">
           {/* Background overlay */}
-          <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
 
           <div className="relative z-10 max-w-7xl mx-auto w-full overflow-x-hidden">
             {/* Mobile layout */}
@@ -57,7 +61,7 @@ export default function Home() {
                 </h1>
                 <div className="text-base text-white flex flex-wrap items-baseline justify-center gap-x-2 mb-3">
                   <span className="whitespace-nowrap">And I am a</span>
-                  <TypingAnimation texts={["Full Stack Developer", "Backend Engineer", "UI/UX Designer", "Problem Solver", "Tech Enthusiast"]} speed={80} deleteSpeed={40} pauseTime={2500} />
+                  <TypingAnimationLazy texts={["Full Stack Developer", "Backend Engineer", "UI/UX Designer", "Problem Solver", "Tech Enthusiast"]} speed={80} deleteSpeed={40} pauseTime={2500} />
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed max-w-md mx-auto">
                   I am a passionate developer who loves creating amazing digital experiences and solving complex problems with innovative solutions. With expertise in modern web technologies, I build scalable applications that make a difference.
@@ -84,9 +88,9 @@ export default function Home() {
 
                 {/* Card 3D trên mobile - kích thước gọn */}
                 <div className="mt-6 flex justify-center">
-                  <div className="relative w-[300px] h-[420px]" style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent' }}>
+                  <div className="relative w-[300px] h-[420px] border-0 outline-none shadow-none bg-transparent">
                     <div className="absolute inset-0">
-                      <Badge3DWrapper fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
+                      <Badge3DLazy fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
                     </div>
                   </div>
                 </div>
@@ -108,7 +112,7 @@ export default function Home() {
                     <div className="text-lg md:text-xl lg:text-2xl text-white min-h-[2.5rem] flex flex-wrap items-baseline justify-center lg:justify-start gap-x-2 mb-4 relative z-10">
                       <span className="whitespace-nowrap">And I am a</span>
                       <span className="whitespace-nowrap inline-flex">
-                        <TypingAnimation
+                        <TypingAnimationLazy
                           texts={[
                             "Frontend Developer",
                             "Backend Engineer",
@@ -156,9 +160,9 @@ export default function Home() {
               {/* Right Section - 3D Badge */}
               <RevealOnScroll delayMs={120}>
                 <div className="flex justify-center lg:justify-end overflow-visible">
-                  <div className="relative w-[420px] h-[560px] md:w-[560px] md:h-[720px] lg:w-[640px] lg:h-[820px]" style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent' }}>
+                  <div className="relative w-[420px] h-[560px] md:w-[560px] md:h-[720px] lg:w-[640px] lg:h-[820px] border-0 outline-none shadow-none bg-transparent">
                     <div className="absolute inset-0">
-                      <Badge3DWrapper fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
+                      <Badge3DLazy fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
                     </div>
                   </div>
                 </div>
@@ -168,7 +172,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden">
+        <section id="about" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden cv-auto">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -182,7 +186,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden">
+        <section id="projects" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden cv-auto">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -196,7 +200,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden">
+        <section id="skills" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden cv-auto">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -210,7 +214,7 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden">
+        <section id="contact" className="min-h-screen flex items-center justify-center px-4 overflow-x-hidden cv-auto">
           <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
