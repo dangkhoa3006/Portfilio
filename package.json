@@ -12,7 +12,6 @@
     "@react-three/fiber": "^9.3.0",
     "@react-three/rapier": "^2.1.0",
     "@types/three": "^0.180.0",
-    "framer-motion": "^12.23.22",
     "meshline": "^3.3.1",
     "next": "15.5.4",
     "react": "19.1.0",

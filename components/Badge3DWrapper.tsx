@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 
 // Dynamic import chỉ để trì hoãn render 3D đến khi client load xong
 // => Giúp giảm TTFB và tránh lỗi "window is not defined"
-const Badge3D = dynamic(() => import('@/components/Badge3D'), {
+const Badge3D = dynamic(() => import('@/components/Band'), {
   ssr: false,
   loading: () => (
     <div className="absolute inset-0 flex items-center justify-center text-white/70 text-sm">
@@ -26,17 +26,7 @@ export default function Badge3DWrapper({
   userImageUrl = '/image/avt.jpg',
 }: Props) {
   return (
-    <div
-      className="relative w-full h-full overflow-visible"
-      style={{
-        zIndex: 50,
-        pointerEvents: 'auto',
-        background: 'transparent',
-        border: 'none',
-        outline: 'none',
-        boxShadow: 'none',
-      }}
-    >
+    <div className="relative w-full h-full overflow-visible z-[50] pointer-events-auto bg-transparent">
       <Suspense
         fallback={
           <div className="absolute inset-0 flex items-center justify-center text-white/70 text-sm">
@@ -44,11 +34,7 @@ export default function Badge3DWrapper({
           </div>
         }
       >
-        <Badge3D
-          fullName={fullName}
-          jobTitle={jobTitle}
-          userImageUrl={userImageUrl}
-        />
+        <Badge3D />
       </Suspense>
     </div>
   )

@@ -1,10 +1,10 @@
-import ParticleNetwork from '@/components/ParticleNetwork';
+import GridBackground from '@/components/GridBackground';
+import RevealOnScroll from '@/components/RevealOnScroll';
 import Header from '@/components/Header';
 import TypingAnimation from '@/components/TypingAnimation';
 import ScrollVelocity from '@/components/ScrollVelocity';
 import LogoLoop from '@/components/LogoLoop';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
 import Badge3DWrapper from '@/components/Badge3DWrapper';
 import { 
   SiReact, 
@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      <ParticleNetwork />
+      <GridBackground />
       <Header />
       <main className="relative z-10 pt-20 md:pt-20">
         {/* Portfolio content sẽ được thêm vào đây */}
@@ -52,6 +52,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto w-full overflow-x-hidden">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Left Section - Introduction */}
+              <RevealOnScroll>
               <div className="text-center lg:text-left space-y-6 lg:space-y-8 px-4 lg:px-0">
                 <div className="space-y-4">
                   <h3 className="text-base lg:text-lg text-white/80">Hello, It's Me</h3>
@@ -140,15 +141,18 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              </RevealOnScroll>
 
               {/* Right Section - 3D Badge */}
-              <div className="flex justify-center lg:justify-end overflow-visible">
-                <div className="relative w-[420px] h-[560px] md:w-[560px] md:h-[720px] lg:w-[640px] lg:h-[820px]" style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent' }}>
-                  <div className="absolute inset-0">
-                    <Badge3DWrapper fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
+              <RevealOnScroll delayMs={120}>
+                <div className="flex justify-center lg:justify-end overflow-visible">
+                  <div className="relative w-[420px] h-[560px] md:w-[560px] md:h-[720px] lg:w-[640px] lg:h-[820px]" style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent' }}>
+                    <div className="absolute inset-0">
+                      <Badge3DWrapper fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </RevealOnScroll>
             </div>
           </div>
         </section>

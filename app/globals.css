@@ -20,8 +20,8 @@
 }
 
 body {
-  background: var(--background);
-  background-attachment: fixed;
+  /* Để nền động global hiển thị mượt, body để trong suốt */
+  background: transparent;
   color: var(--foreground);
   min-height: 100vh;
   overflow-x: hidden;
@@ -29,6 +29,7 @@ body {
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
   /* Hide status bar on mobile */
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -80,6 +81,7 @@ header[role="banner"],
   /* Only prevent horizontal scroll, keep layout intact */
   main, section {
     overflow-x: hidden;
+    scroll-margin-top: 80px; /* chừa chỗ cho header khi nhảy anchor */
   }
   
   /* Hide status bar and top elements - stronger approach */

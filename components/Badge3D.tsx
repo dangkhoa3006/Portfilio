@@ -236,7 +236,8 @@ function Band({
                   </mesh>
 
                   {/* Nội dung badge */}
-                  <group position={[0, 0, 0.01]} scale={[1.3, 1.3, 1]}>
+                  {/* Xoay nội dung để khớp UV của model thay vì xoay texture trực tiếp */}
+                  <group position={[0, 0, 0.01]} scale={[1.3, 1.3, 1]} rotation={[0, 0, Math.PI / 2]}>
                     {/* Header: ngày hoặc tagline (bạn có thể chỉnh tùy ý) */}
                     <Text
                       position={[0.8, 0.85, 0]}

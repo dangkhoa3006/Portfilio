@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import GridBackground from "@/components/GridBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,12 +16,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio - Khoa",
   description: "Personal portfolio of Khoa - Full Stack Developer & UI/UX Designer",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 2,
-    userScalable: true,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 2,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -29,10 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
+        <div className="fixed inset-0 -z-10">
+          <GridBackground />
+        </div>
         {children}
       </body>
     </html>
