@@ -33,15 +33,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning className="bg-[#0b0b0f]">
-      <head>
-        <link
-          rel="preload"
-          href="/_next/static/media/geist-latin.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0b0b0f] text-white`}
         suppressHydrationWarning

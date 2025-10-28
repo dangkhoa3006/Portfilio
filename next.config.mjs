@@ -2,6 +2,8 @@
 const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
+    productionBrowserSourceMaps: false,
+    poweredByHeader: false,
     compiler: {
         removeConsole: {
             exclude: ['error', 'warn']
@@ -9,6 +11,22 @@ const nextConfig = {
     },
     experimental: {
         optimizePackageImports: ['react-icons', 'three', '@react-three/drei']
+    },
+    async headers() {
+        return [
+            {
+                source: '/_next/static/:path*',
+                headers: [
+                    { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+                ]
+            },
+            {
+                source: '/fonts/:path*',
+                headers: [
+                    { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }
+                ]
+            }
+        ]
     }
 }
 
