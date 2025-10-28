@@ -95,9 +95,10 @@ export default function GridBackground() {
       animationFrame = requestAnimationFrame(draw)
     }
 
-    // Tôn trọng reduce-motion: nếu người dùng muốn giảm chuyển động, không animate dots
+    // Tôn trọng reduce-motion hoặc màn hình nhỏ: chỉ vẽ tĩnh trên mobile để mượt
     const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    if (!prefersReduced) {
+    const isSmallScreen = window.matchMedia?.('(max-width: 767px)').matches
+    if (!prefersReduced && !isSmallScreen) {
       animationFrame = requestAnimationFrame(draw)
     } else {
       ctx.drawImage(gridCanvas, 0, 0)

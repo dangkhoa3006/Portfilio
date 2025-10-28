@@ -41,9 +41,9 @@ export default function TypingAnimation({
   }, [currentText, isDeleting, currentTextIndex, texts, speed, deleteSpeed, pauseTime]);
 
   return (
-    <span className="text-xl md:text-2xl text-white/80 mb-8">
+    <span className="text-xl md:text-2xl text-white/80 mb-8 inline-flex items-baseline">
       {currentText}
-      <span className="animate-pulse">|</span>
+      <span className="animate-pulse ml-1">|</span>
     </span>
   );
 }

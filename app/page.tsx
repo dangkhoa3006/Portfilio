@@ -50,7 +50,34 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto w-full overflow-x-hidden">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Mobile layout */}
+            <div className="lg:hidden">
+              <div className="text-center space-y-5 px-4">
+                <h3 className="text-sm text-white/80">Hello, It's Me</h3>
+                <h1 className="text-4xl font-bold text-white">
+                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Khoa</span>
+                </h1>
+                <div className="text-base text-white flex flex-wrap items-baseline justify-center gap-x-2 mb-3">
+                  <span className="whitespace-nowrap">And I am a</span>
+                  <TypingAnimation texts={["Full Stack Developer","Backend Engineer","UI/UX Designer","Problem Solver","Tech Enthusiast"]} speed={80} deleteSpeed={40} pauseTime={2500} />
+                </div>
+                <p className="text-white/80 text-sm leading-relaxed max-w-md mx-auto">
+                  I am a passionate developer who loves creating amazing digital experiences and solving complex problems with innovative solutions. With expertise in modern web technologies, I build scalable applications that make a difference.
+                </p>
+
+                {/* Card 3D trên mobile - kích thước gọn */}
+                <div className="mt-6 flex justify-center">
+                  <div className="relative w-[300px] h-[420px]" style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent' }}>
+                    <div className="absolute inset-0">
+                      <Badge3DWrapper fullName="Khoa Dang" jobTitle="Full Stack Developer" userImageUrl="/image/avt.jpg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop layout */}
+            <div className="hidden lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Left Section - Introduction */}
               <RevealOnScroll>
               <div className="text-center lg:text-left space-y-6 lg:space-y-8 px-4 lg:px-0">
@@ -61,8 +88,9 @@ export default function Home() {
                       Khoa
                     </span>
                   </h1>
-                  <div className="text-lg md:text-xl lg:text-2xl text-white min-h-[2.5rem] flex items-center justify-center lg:justify-start">
-                    And I am a{' '}
+                  <div className="text-lg md:text-xl lg:text-2xl text-white min-h-[2.5rem] flex flex-wrap items-baseline justify-center lg:justify-start gap-x-2 mb-4 relative z-10">
+                    <span className="whitespace-nowrap">And I am a</span>
+                    <span className="whitespace-nowrap inline-flex">
                     <TypingAnimation 
                       texts={[
                         "Full Stack Developer",
@@ -75,10 +103,11 @@ export default function Home() {
                       deleteSpeed={40}
                       pauseTime={2500}
                     />
+                    </span>
                   </div>
                 </div>
                 
-                <div className="mt-8">
+                <div className="mt-6 sm:mt-8 relative z-0">
                   <ScrollVelocity speed={0.3}>
                     <p className="text-white/80 text-base lg:text-lg max-w-lg mx-auto lg:mx-0 leading-relaxed">
                       I am a passionate developer who loves creating amazing digital experiences and solving complex problems with innovative solutions. With expertise in modern web technologies, I build scalable applications that make a difference.
