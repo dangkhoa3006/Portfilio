@@ -340,10 +340,10 @@ export default function Badge3D({
       gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
       camera={{ position: [0, 0, 13], fov: 25 }}
       dpr={[1, 1.5]}
-      frameloop="demand"
+      frameloop="always"
     >
       <ambientLight intensity={Math.PI * 0.5} />
-      <Physics gravity={[0, -40, 0]} timeStep={1 / 60}>
+      <Physics gravity={[0, -20, 0]} timeStep={1 / 60}>
         <Band
           fullName={fullName}
           jobTitle={jobTitle}

@@ -24,6 +24,8 @@ export default function GridBackground() {
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
       rebuildGrid()
       rebuildDots()
+      // Vẽ lại ngay sau khi resize (đặc biệt cho mobile khi không chạy animation)
+      ctx.drawImage(gridCanvas, 0, 0)
     }
 
     // Layer grid vẽ sẵn vào offscreen để không phải vẽ lặp lại mỗi frame
@@ -111,7 +113,7 @@ export default function GridBackground() {
   }, [])
 
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
       {/* overlay mờ cho chiều sâu */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_60%)] pointer-events-none" />

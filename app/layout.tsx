@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import GridBackground from "@/components/GridBackground";
+import NetworkBackground from "@/components/NetworkBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning className="bg-[#0b0b0f]">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0b0b0f] text-white`}
         suppressHydrationWarning
       >
-        <div className="fixed inset-0 -z-10">
+        <div className="fixed inset-0 -z-10 pointer-events-none">
           <GridBackground />
+          <NetworkBackground />
         </div>
         {children}
       </body>
