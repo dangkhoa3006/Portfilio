@@ -10,6 +10,7 @@ export default function Header() {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
+    { name: 'Highlights', href: '#strength' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
@@ -20,7 +21,7 @@ export default function Header() {
       setIsScrolled(window.scrollY > 50);
       
       // Detect active section based on scroll position
-      const sections = ['home', 'about', 'projects', 'skills', 'contact'];
+      const sections = ['home', 'about', 'strength', 'projects', 'skills', 'contact'];
       const scrollPosition = window.scrollY + 200; // Tăng offset để detect sớm hơn
       
       let currentSection = 'home'; // Default to home

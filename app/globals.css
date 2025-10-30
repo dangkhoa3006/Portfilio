@@ -27,6 +27,24 @@ body {
   overflow-x: hidden;
 }
 
+/* Viền bao ngoài toàn trang, không ảnh hưởng component con */
+.page-frame {
+  position: relative;
+}
+.page-frame::after {
+  content: "";
+  position: fixed;
+  inset: 16px; /* khoảng cách viền với mép màn hình */
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 200, 0.06) inset,
+    0 0 24px rgba(0, 255, 200, 0.08),
+    0 0 0 9999px transparent; /* đảm bảo không chặn click */
+  pointer-events: none;
+  z-index: 50; /* nổi trên background nhưng dưới modals nếu có */
+}
+
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -120,4 +138,193 @@ header[role="banner"],
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: 1px 1000px;
+}
+
+/* Animated gradient border utilities (usable as Tailwind-like classes) */
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: true;
+}
+
+@property --gradX {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: true;
+}
+
+@property --gradY {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: true;
+}
+
+:root {
+  --d: 2500ms;
+  --angle: 90deg;
+  --gradX: 100%;
+  --gradY: 50%;
+  --c1: rgba(168, 239, 255, 1);
+  --c2: rgba(168, 239, 255, 0.1);
+}
+
+@keyframes borderRotate {
+  100% { --angle: 420deg; }
+}
+
+@keyframes borderRadial {
+  20% { --gradX: 100%; --gradY: 50%; }
+  40% { --gradX: 100%; --gradY: 100%; }
+  60% { --gradX: 50%; --gradY: 100%; }
+  80% { --gradX: 0%;   --gradY: 50%; }
+  100%{ --gradX: 50%;  --gradY: 0%; }
+}
+
+/* Use on any .rounded-* element. Works like a Tailwind utility */
+.border-animated-conic {
+  position: relative;
+  isolation: isolate;
+}
+.border-animated-conic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* border width */
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn);
+  animation: borderRotate var(--d) linear infinite forwards;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.border-animated-radial {
+  position: relative;
+  isolation: isolate;
+}
+.border-animated-radial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at var(--gradX) var(--gradY), var(--c1), var(--c1) 10%, var(--c2) 40%);
+  animation: borderRadial var(--d) linear infinite forwards;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Neon card border for "Sức mạnh OCTOTECH" */
+.neon-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.04);
+}
+.neon-card::before {
+  --nc1: var(--c1);
+  --nc2: var(--c2);
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), var(--nc2), var(--nc1) 0.1turn, var(--nc1) 0.15turn, var(--nc2) 0.25turn);
+  animation: borderRotate var(--d) linear infinite forwards;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Allow custom color per card via data attribute */
+.neon-card[data-color="teal"]::before { --nc1: rgba(34, 211, 238, 1); --nc2: rgba(34, 211, 238, 0.08); }
+.neon-card[data-color="green"]::before { --nc1: rgba(74, 222, 128, 1); --nc2: rgba(74, 222, 128, 0.08); }
+.neon-card[data-color="orange"]::before { --nc1: rgba(251, 146, 60, 1); --nc2: rgba(251, 146, 60, 0.08); }
+.neon-card[data-color="purple"]::before { --nc1: rgba(168, 85, 247, 1); --nc2: rgba(168, 85, 247, 0.08); }
+.neon-card[data-color="red"]::before { --nc1: rgba(248, 113, 113, 1); --nc2: rgba(248, 113, 113, 0.08); }
+.neon-card[data-color="pink"]::before { --nc1: rgba(244, 114, 182, 1); --nc2: rgba(244, 114, 182, 0.08); }
+
+/* Glass effect for card content */
+.glass-panel {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
+}
+
+/* Top highlight and inner glow to resemble glass panel */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 2px 2px auto 2px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0));
+  pointer-events: none;
+}
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 -20px 40px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+/* Sweep shine animation */
+@keyframes glassShine {
+  0% { transform: translateX(-120%) rotate(12deg); opacity: 0; }
+  20% { opacity: 0.6; }
+  50% { opacity: 0.2; }
+  100% { transform: translateX(140%) rotate(12deg); opacity: 0; }
+}
+.glass-shine {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 40%;
+  height: 140%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+  filter: blur(8px);
+  transform: translateX(-120%) rotate(12deg);
+  animation: glassShine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Subtle background drift for glass */
+@keyframes glassFloat {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 40%; }
+}
+.glass-animated {
+  background-image: radial-gradient(65% 40% at 50% 0%, rgba(255,255,255,0.10), rgba(255,255,255,0));
+  background-repeat: no-repeat;
+  animation: glassFloat 10s ease-in-out infinite alternate;
+}
+
+/* Hover interactions for card */
+.glass-hover .glass-panel:hover {
+  transform: translateY(-6px) scale(1.02);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 32px rgba(34,211,238,0.15), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.glass-hover:hover .glass-shine {
+  animation-duration: 2.2s;
+}
+.glass-hover:hover::before {
+  filter: drop-shadow(0 0 18px rgba(34,211,238,0.25));
 }
