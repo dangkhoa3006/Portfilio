@@ -1,0 +1,23 @@
+name: Deploy Next.js Docker
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH into server and deploy
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ~/next-app
+          git pull
+          docker compose down
+          docker compose build
+          docker compose up -d
