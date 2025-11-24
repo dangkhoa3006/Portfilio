@@ -1,7 +1,7 @@
 services:
-  nextjs:
+  next-app:
     build: .
-    container_name: nextjs-app
+    container_name: portfilio_app
+    restart: always
     ports:
       - "3000:3000"
-    restart: always
