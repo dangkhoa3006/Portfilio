@@ -799,7 +799,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="text-white/60 text-sm">Email</p>
-                        <p className="text-white font-medium">dangkhoa.octotech@gmail.com</p>
+                        <p className="text-white font-medium">dangkhoa.octotech@gmaila.com</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
