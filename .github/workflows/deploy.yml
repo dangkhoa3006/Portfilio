@@ -26,7 +26,7 @@ jobs:
     - name: Zip build files
       run: |
         mkdir build
-        cp -r .next package.json next.config.js public build/
+        cp -r .next package.json next.config.mjs public build/
         cd build
         zip -r build.zip .
 
