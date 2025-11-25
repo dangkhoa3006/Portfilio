@@ -810,7 +810,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="text-white/60 text-sm">Phone</p>
-                        <p className="text-white font-medium">0336730188</p>
+                        <p className="text-white font-medium">0336730183</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
