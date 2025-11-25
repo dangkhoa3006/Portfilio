@@ -5,48 +5,32 @@ on:
     branches: ["master"]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/Portfilio
 
-    - name: Install dependencies
-      run: npm ci
+            echo "👉 Pull source mới nhất"
+            git pull origin master
 
-    - name: Build Next.js
-      run: npm run build
+            echo "👉 Cài dependencies"
+            npm install
 
-    - name: Zip build files
-      run: |
-        mkdir build
-        cp -r .next package.json next.config.js public build/
-        cd build
-        zip -r build.zip .
+            echo "👉 Build Next.js (tắt turbopack cho server yếu)"
+            NEXT_TELEMETRY_DISABLED=1 NEXT_JS_DISABLE_TURBOPACK=1 npm run build
 
-    - name: Upload to server via SSH
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        source: "build/build.zip"
-        target: "~/Portfilio"
-
-    - name: SSH deploy commands
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd ~/Portfilio
-          unzip -o build.zip
-          npm install --production
-          pm2 restart portfilio-app
+            echo "👉 Restart PM2"
+            pm2 stop portfilio || true
+            pm2 start npm --name "portfilio" -- start
+            pm2 save
