@@ -1,4 +1,4 @@
-name: Deploy Next.js App (EC2 + PM2)
+name: Deploy NextJS to EC2
 
 on:
   push:
@@ -9,26 +9,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          # Vào thư mục project
-          cd ~/portfolio
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-          # Kéo code mới nhất
-          git fetch --all
-          git reset --hard origin/master
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
 
-          # Cài dependencies (nếu có thay đổi)
-          npm install --production
+      - name: Install dependencies
+        run: npm install
 
-          # Build lại project
-          npm run build
+      - name: Build Next.js
+        run: npm run build
 
-          # Restart PM2
-          pm2 start npm --name "portfolio-app" -- start || pm2 restart portfolio-app
-          pm2 save
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 47.129.136.171
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /var/www/portfolio
+
+            echo "📌 Pulling latest code..."
+            git pull origin main
+
+            echo "📌 Install dependencies..."
+            npm install
+
+            echo "📌 Building production..."
+            npm run build
+
+            echo "📌 Restarting PM2..."
+            pm2 restart portfolio || pm2 start "npm start" --name portfolio
+            pm2 save
+
+            echo "📌 Restart Nginx..."
+            sudo systemctl restart nginx
+
+            echo "🎉 Deploy COMPLETE!"
