@@ -1,23 +1,52 @@
-name: Deploy Next.js Docker
+name: Deploy Next.js App
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH into server and deploy
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Next.js
+      run: npm run build
+
+    - name: Zip build files
+      run: |
+        mkdir build
+        cp -r .next package.json next.config.js public build/
+        cd build
+        zip -r build.zip .
+
+    - name: Upload to server via SSH
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "build/build.zip"
+        target: "~/Portfilio"
+
+    - name: SSH deploy commands
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd ~/next-app
-          git pull
-          docker compose down
-          docker compose build
-          docker compose up -d
+          cd ~/Portfilio
+          unzip -o build.zip
+          npm install --production
+          pm2 restart portfilio-app
