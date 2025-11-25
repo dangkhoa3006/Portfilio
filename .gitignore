@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# SSH deployment keys
+porfolio_deploy_key
+porfolio_deploy_key.pub
