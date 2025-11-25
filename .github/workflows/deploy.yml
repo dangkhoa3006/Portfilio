@@ -31,21 +31,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /var/www/portfolio
-
-            echo "📌 Pulling latest code..."
             git pull origin main
-
-            echo "📌 Install dependencies..."
             npm install
-
-            echo "📌 Building production..."
             npm run build
-
-            echo "📌 Restarting PM2..."
             pm2 restart portfolio || pm2 start "npm start" --name portfolio
             pm2 save
-
-            echo "📌 Restart Nginx..."
             sudo systemctl restart nginx
-
-            echo "🎉 Deploy COMPLETE!"
